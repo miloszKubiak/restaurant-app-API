@@ -14,7 +14,11 @@ const register = async (req, res) => {
 		throw new BadRequestError("Email already in use");
 	}
 
-	const user = await User.create({ name, email, password });
+	//first registered user is an admin
+	const isFirstAccount = (await User.countDocuments({})) === 0;
+	const role = isFirstAccount ? "admin" : "user";
+
+	const user = await User.create({ name, email, password, role });
 	const token = user.createJWT();
 	res.status(StatusCodes.CREATED).json({
 		user: {
@@ -25,6 +29,7 @@ const register = async (req, res) => {
 		},
 		token,
 		location: user.location,
+		role: user.role,
 	});
 };
 
@@ -47,9 +52,4 @@ const login = async (req, res) => {
 	res.status(StatusCodes.OK).json({ user, token, location: user.location });
 };
 
-const updateUser = async (req, res) => {
-	console.log(req.user)
-	res.send("update user");
-};
-
-export { register, login, updateUser };
+export { register, login };

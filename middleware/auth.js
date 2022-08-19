@@ -9,7 +9,6 @@ const auth = (req, res, next) => {
 		throw new UnAuthenticatedError("Authentication Invalid");
 	}
   const token = authHeader.split(" ")[1];
-  console.log(`token ${token}`)
 
 	try {
 		const payload = jwt.verify(token, process.env.JWT_SECRET);
