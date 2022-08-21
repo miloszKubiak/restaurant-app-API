@@ -8,6 +8,7 @@ import notFoundMiddleware from "./middleware/not-found.js";
 import errorHandlerMiddleware from "./middleware/error-handler.js";
 
 import authRouter from "./routes/authRoutes.js";
+import mealsRouter from "./routes/mealsRouter.js";
 
 const app = express();
 dotenv.config();
@@ -23,6 +24,7 @@ app.get("/api/v1", (req, res) => {
 });
 
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/meals", mealsRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
