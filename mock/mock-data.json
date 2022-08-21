@@ -1,0 +1,52 @@
+[
+	{
+		"name": "pizza 1",
+		"price": 31,
+		"image": "https://dl.airtable.com/.attachmentThumbnails/e8bc3791196535af65f40e36993b9e1f/438bd160",
+		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi laoreet placerat interdum. Donec eu hendrerit enim. Integer ut orci eu lacus ornare pharetra ut sed quam. Curabitur egestas iaculis mi sed facilisis. Curabitur sit amet nulla vel odio mattis tempus. Nulla vel lorem sed lacus mattis posuere eu vitae lectus. Sed sollicitudin accumsan mauris a consequat. Donec at tellus elit. Praesent finibus sapien ac nisi pellentesque posuere. Aliquam tempus turpis lacus, at scelerisque sapien pharetra et. Vivamus volutpat ut ex sed finibus. Nunc vel gravida nisl. Sed vitae lacus tellus. Morbi sed nulla odio. Sed dui libero, porttitor nec lectus.",
+		"category": "pizza",
+		"featured": false,
+		"averageRating": 4,
+		"numberOfReviews": 20
+	},
+	{
+		"name": "pasta 1",
+		"price": 32,
+		"image": "https://dl.airtable.com/.attachmentThumbnails/e8bc3791196535af65f40e36993b9e1f/438bd160",
+		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi laoreet placerat interdum. Donec eu hendrerit enim. Integer ut orci eu lacus ornare pharetra ut sed quam. Curabitur egestas iaculis mi sed facilisis. Curabitur sit amet nulla vel odio mattis tempus. Nulla vel lorem sed lacus mattis posuere eu vitae lectus. Sed sollicitudin accumsan mauris a consequat. Donec at tellus elit. Praesent finibus sapien ac nisi pellentesque posuere. Aliquam tempus turpis lacus, at scelerisque sapien pharetra et. Vivamus volutpat ut ex sed finibus. Nunc vel gravida nisl. Sed vitae lacus tellus. Morbi sed nulla odio. Sed dui libero, porttitor nec lectus.",
+		"category": "pasta",
+		"featured": true,
+		"averageRating": 4,
+		"numberOfReviews": 22
+	},
+	{
+		"name": "soup 1",
+		"price": 33,
+		"image": "https://dl.airtable.com/.attachmentThumbnails/e8bc3791196535af65f40e36993b9e1f/438bd160",
+		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi laoreet placerat interdum. Donec eu hendrerit enim. Integer ut orci eu lacus ornare pharetra ut sed quam. Curabitur egestas iaculis mi sed facilisis. Curabitur sit amet nulla vel odio mattis tempus. Nulla vel lorem sed lacus mattis posuere eu vitae lectus. Sed sollicitudin accumsan mauris a consequat. Donec at tellus elit. Praesent finibus sapien ac nisi pellentesque posuere. Aliquam tempus turpis lacus, at scelerisque sapien pharetra et. Vivamus volutpat ut ex sed finibus. Nunc vel gravida nisl. Sed vitae lacus tellus. Morbi sed nulla odio. Sed dui libero, porttitor nec lectus.",
+		"category": "soup",
+		"featured": false,
+		"averageRating": 4,
+		"numberOfReviews": 23
+	},
+	{
+		"name": "salad 1",
+		"price": 34,
+		"image": "https://dl.airtable.com/.attachmentThumbnails/e8bc3791196535af65f40e36993b9e1f/438bd160",
+		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi laoreet placerat interdum. Donec eu hendrerit enim. Integer ut orci eu lacus ornare pharetra ut sed quam. Curabitur egestas iaculis mi sed facilisis. Curabitur sit amet nulla vel odio mattis tempus. Nulla vel lorem sed lacus mattis posuere eu vitae lectus. Sed sollicitudin accumsan mauris a consequat. Donec at tellus elit. Praesent finibus sapien ac nisi pellentesque posuere. Aliquam tempus turpis lacus, at scelerisque sapien pharetra et. Vivamus volutpat ut ex sed finibus. Nunc vel gravida nisl. Sed vitae lacus tellus. Morbi sed nulla odio. Sed dui libero, porttitor nec lectus.",
+		"category": "salad",
+		"featured": false,
+		"averageRating": 4,
+		"numberOfReviews": 24
+	},
+	{
+		"name": "dessert 1",
+		"price": 35,
+		"image": "https://dl.airtable.com/.attachmentThumbnails/e8bc3791196535af65f40e36993b9e1f/438bd160",
+		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi laoreet placerat interdum. Donec eu hendrerit enim. Integer ut orci eu lacus ornare pharetra ut sed quam. Curabitur egestas iaculis mi sed facilisis. Curabitur sit amet nulla vel odio mattis tempus. Nulla vel lorem sed lacus mattis posuere eu vitae lectus. Sed sollicitudin accumsan mauris a consequat. Donec at tellus elit. Praesent finibus sapien ac nisi pellentesque posuere. Aliquam tempus turpis lacus, at scelerisque sapien pharetra et. Vivamus volutpat ut ex sed finibus. Nunc vel gravida nisl. Sed vitae lacus tellus. Morbi sed nulla odio. Sed dui libero, porttitor nec lectus.",
+		"category": "dessert",
+		"featured": false,
+		"averageRating": 4,
+		"numberOfReviews": 20
+	}
+]
