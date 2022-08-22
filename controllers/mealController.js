@@ -6,7 +6,7 @@ const getAllMealsStatic = async (req, res) => {
 };
 
 const getAllMeals = async (req, res) => {
-	const { name, category, featured } = req.query;
+	const { name, category, featured, sort } = req.query;
 
 	const queryObject = {};
 
@@ -20,7 +20,22 @@ const getAllMeals = async (req, res) => {
 		queryObject.name = { $regex: name, $options: "i" };
 	}
 
-	const meals = await Meal.find(queryObject);
+	let result = Meal.find(queryObject);
+	
+	if (sort === "a-z") {
+		result = result.sort("name");
+	}
+	if (sort === "z-a") {
+		result = result.sort("-name");
+	}
+	if (sort === "price-lowest") {
+		result = result.sort("price");
+	}
+	if (sort === "price-highest") {
+		result = result.sort("-price");
+	}
+
+	const meals = await result;
 	res.status(200).json({ nbHits: meals.length, meals });
 };
 
