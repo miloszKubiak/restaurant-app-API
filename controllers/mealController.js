@@ -6,7 +6,7 @@ const getAllMealsStatic = async (req, res) => {
 };
 
 const getAllMeals = async (req, res) => {
-	const { name, category, featured, sort } = req.query;
+	const { name, category, featured, sort, numericFilters } = req.query;
 
 	const queryObject = {};
 
@@ -20,7 +20,28 @@ const getAllMeals = async (req, res) => {
 	if (name) {
 		queryObject.name = { $regex: name, $options: "i" };
 	}
-
+	if (numericFilters) {
+		const operatorMap = {
+			">": "$gt",
+			">=": "$gte",
+			"=": "$eq",
+			"<": "$lt",
+			"<=": "$lte",
+		};
+		const regEx = /\b(<|>|>=|=|<|<=)\b/g;
+		let filters = numericFilters.replace(
+			regEx,
+			(match) => `-${operatorMap[match]}-`
+		);
+		const options = ["price", "averageRating"];
+		filters = filters.split(",").forEach((item) => {
+			const [field, operator, value] = item.split("-");
+			if (options.includes(field)) {
+				queryObject[field] = { [operator]: Number(value) };
+			}
+		});
+	}
+	console.log(queryObject);
 	let result = Meal.find(queryObject);
 
 	//sort
