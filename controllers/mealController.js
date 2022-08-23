@@ -1,8 +1,17 @@
 import Meal from "../models/Meal.js";
+import { StatusCodes } from "http-status-codes";
+import CustomAPIError from "../errors/custom-api.js";
 
-const getAllMealsStatic = async (req, res) => {
-	const meals = await Meal.find({}).sort("name").limit(10);
-	res.status(200).json({ nbHits: meals.length, meals });
+const getSingleMeal = async (req, res) => {
+	const { id: mealId } = req.params;
+
+	const meal = await Meal.findOne({ _id: mealId });
+
+	if (!meal) {
+		throw new CustomAPIError(`No meal with id: ${mealId}`);
+	}
+
+	res.status(StatusCodes.OK).json({ meal });
 };
 
 const getAllMeals = async (req, res) => {
@@ -60,13 +69,17 @@ const getAllMeals = async (req, res) => {
 
 	//pagination
 	const page = Number(req.query.page) || 1;
-	const limit = Number(req.query.limit) || 10;
+	const limit = Number(req.query.limit) || 20;
 	const skip = (page - 1) * limit;
 
 	result = result.skip(skip).limit(limit);
 
 	const meals = await result;
-	res.status(200).json({ nbHits: meals.length, meals });
+	res.status(StatusCodes.OK).json({
+		totalMeals: meals.length,
+		meals,
+		numOfPages: 1,
+	});
 };
 
-export { getAllMealsStatic, getAllMeals };
+export { getAllMeals, getSingleMeal };

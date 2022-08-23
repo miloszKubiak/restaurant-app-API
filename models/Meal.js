@@ -23,7 +23,6 @@ const MealSchema = new mongoose.Schema(
 		},
 		image: {
 			type: String,
-			required: [true, "Please provide meal name"],
 			default: "/uploads/example.jpeg",
 		},
 		category: {
