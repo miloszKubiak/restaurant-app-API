@@ -15,43 +15,52 @@ const getSingleMeal = async (req, res) => {
 };
 
 const getAllMeals = async (req, res) => {
-	const { name, category, featured, sort, numericFilters } = req.query;
+	const { search, category, sort } = req.query;
 
 	const queryObject = {};
 
 	//filtering
-	if (featured) {
-		queryObject.featured = featured === "true" ? true : false;
+	if (category !== "all") {
+		queryObject.category = category
 	}
-	if (category) {
-		queryObject.category = category;
+	if (search) {
+		queryObject.name = { $regex: search, $options: "i" };
 	}
-	if (name) {
-		queryObject.name = { $regex: name, $options: "i" };
-	}
-	if (numericFilters) {
-		const operatorMap = {
-			">": "$gt",
-			">=": "$gte",
-			"=": "$eq",
-			"<": "$lt",
-			"<=": "$lte",
-		};
-		const regEx = /\b(<|>|>=|=|<|<=)\b/g;
-		let filters = numericFilters.replace(
-			regEx,
-			(match) => `-${operatorMap[match]}-`
-		);
-		const options = ["price", "averageRating"];
-		filters = filters.split(",").forEach((item) => {
-			const [field, operator, value] = item.split("-");
-			if (options.includes(field)) {
-				queryObject[field] = { [operator]: Number(value) };
-			}
-		});
-	}
-	console.log(queryObject);
-	let result = Meal.find(queryObject);
+	let result = Meal.find(queryObject)
+
+	//filtering
+	// if (featured) {
+	// 	queryObject.featured = featured === "true" ? true : false;
+	// }
+	// if (category) {
+	// 	queryObject.category = category;
+	// }
+	// if (search) {
+	// 	queryObject.name = { $regex: search, $options: "i" };
+	// }
+	// if (numericFilters) {
+	// 	const operatorMap = {
+	// 		">": "$gt",
+	// 		">=": "$gte",
+	// 		"=": "$eq",
+	// 		"<": "$lt",
+	// 		"<=": "$lte",
+	// 	};
+	// 	const regEx = /\b(<|>|>=|=|<|<=)\b/g;
+	// 	let filters = numericFilters.replace(
+	// 		regEx,
+	// 		(match) => `-${operatorMap[match]}-`
+	// 	);
+	// 	const options = ["price", "averageRating"];
+	// 	filters = filters.split(",").forEach((item) => {
+	// 		const [field, operator, value] = item.split("-");
+	// 		if (options.includes(field)) {
+	// 			queryObject[field] = { [operator]: Number(value) };
+	// 		}
+	// 	});
+	// }
+	// console.log(queryObject);
+	// let result = Meal.find(queryObject);
 
 	//sort
 	if (sort === "a-z") {
@@ -68,13 +77,14 @@ const getAllMeals = async (req, res) => {
 	}
 
 	//pagination
-	const page = Number(req.query.page) || 1;
-	const limit = Number(req.query.limit) || 20;
-	const skip = (page - 1) * limit;
+	// const page = Number(req.query.page) || 1;
+	// const limit = Number(req.query.limit) || 20;
+	// const skip = (page - 1) * limit;
 
-	result = result.skip(skip).limit(limit);
+	// result = result.skip(skip).limit(limit);
 
 	const meals = await result;
+
 	res.status(StatusCodes.OK).json({
 		totalMeals: meals.length,
 		meals,

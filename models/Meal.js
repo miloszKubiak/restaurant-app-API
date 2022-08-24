@@ -49,6 +49,16 @@ const MealSchema = new mongoose.Schema(
 			type: Number,
 			default: 0,
 		},
+		stock: {
+			type: Number,
+			required: true,
+			default: 10,
+		},
+		size: {
+			type: [String],
+			default: ["normal"],
+			required: true,
+		},
 		// user: {
 		// 	type: mongoose.Types.ObjectId,
 		// 	ref: "User",
