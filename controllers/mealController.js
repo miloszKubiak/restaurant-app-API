@@ -20,20 +20,18 @@ const getAllMeals = async (req, res) => {
 	const queryObject = {};
 
 	//filtering
-	if (category !== "all") {
-		queryObject.category = category
+	if (category && category !== "all") {
+		queryObject.category = category;
 	}
 	if (search) {
 		queryObject.name = { $regex: search, $options: "i" };
 	}
-	let result = Meal.find(queryObject)
+	console.log(queryObject);
+	let result = Meal.find(queryObject);
 
 	//filtering
 	// if (featured) {
 	// 	queryObject.featured = featured === "true" ? true : false;
-	// }
-	// if (category) {
-	// 	queryObject.category = category;
 	// }
 	// if (search) {
 	// 	queryObject.name = { $regex: search, $options: "i" };
@@ -59,7 +57,6 @@ const getAllMeals = async (req, res) => {
 	// 		}
 	// 	});
 	// }
-	// console.log(queryObject);
 	// let result = Meal.find(queryObject);
 
 	//sort
@@ -77,18 +74,21 @@ const getAllMeals = async (req, res) => {
 	}
 
 	//pagination
-	// const page = Number(req.query.page) || 1;
-	// const limit = Number(req.query.limit) || 20;
-	// const skip = (page - 1) * limit;
+	const page = Number(req.query.page) || 1;
+	const limit = Number(req.query.limit) || 10;
+	const skip = (page - 1) * limit;
 
-	// result = result.skip(skip).limit(limit);
+	result = result.skip(skip).limit(limit);
 
 	const meals = await result;
 
+	const totalMeals = await Meal.countDocuments(queryObject);
+	const numOfPages = Math.ceil(totalMeals / limit);
+
 	res.status(StatusCodes.OK).json({
-		totalMeals: meals.length,
+		totalMeals,
 		meals,
-		numOfPages: 1,
+		numOfPages,
 	});
 };
 
