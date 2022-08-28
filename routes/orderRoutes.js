@@ -1,5 +1,6 @@
 import express from "express";
 import authenticateUser from "../middleware/auth.js";
+import { authorizePermissions } from "../middleware/authentication.js";
 import {
 	createOrder,
 	updateOrder,
@@ -14,8 +15,10 @@ router
 	.route("/:id")
 	.get(authenticateUser, getSingleOrder)
 	.patch(authenticateUser, updateOrder);
-router.route("/").post(authenticateUser, createOrder);
-// .get(authenticateUser, authorizePermissions("admin"), getAllOrders);
+router
+	.route("/")
+	.post(authenticateUser, createOrder)
+	.get(authenticateUser, authorizePermissions("admin"), getAllOrders);
 
 router.route("/showAllMyOrders").get(authenticateUser, getCurrentUserOrders);
 

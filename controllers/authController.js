@@ -26,9 +26,10 @@ const register = async (req, res) => {
 			lastName: user.lastName,
 			location: user.location,
 			name: user.name,
+			role: user.role,////
 		},
 		token,
-		location: user.location,
+		location: user.location,////
 		role: user.role,
 	});
 };
@@ -49,6 +50,7 @@ const login = async (req, res) => {
 	}
 	const token = user.createJWT();
 	user.password = undefined;
+	console.log(token)
 	res.status(StatusCodes.OK).json({ user, token, location: user.location });
 };
 
