@@ -2,6 +2,9 @@ import mongoose from "mongoose";
 
 const MealSchema = new mongoose.Schema(
 	{
+		// id: {
+
+		// },
 		name: {
 			type: String,
 			required: [true, "Please provide meal name"],
@@ -54,18 +57,15 @@ const MealSchema = new mongoose.Schema(
 			required: true,
 			default: 10,
 		},
-		size: {
-			type: [String],
-			default: ["normal"],
-			required: true,
-		},
 		// user: {
 		// 	type: mongoose.Types.ObjectId,
 		// 	ref: "User",
 		// 	required: true,
 		// },
 	},
-	{ timestamps: true }
+	{
+		timestamps: true,
+	}
 );
 
 export default mongoose.model("Meal", MealSchema);

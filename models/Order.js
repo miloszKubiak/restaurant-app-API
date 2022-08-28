@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
-const SingleCartItemSchema = mongoose.Schema({
+const SingleOrderItemSchema = mongoose.Schema({
 	name: { type: String, required: true },
-	price: { type: String, required: true },
+	price: { type: Number, required: true },
 	amount: { type: Number, required: true },
 	image: { type: String, required: true },
-	meal: {
-		type: mongoose.Schema.ObjectId,
+	id: {
+		type: mongoose.Types.ObjectId,
 		ref: "Meal",
 		required: true,
 	},
@@ -14,6 +14,10 @@ const SingleCartItemSchema = mongoose.Schema({
 
 const OrderSchema = mongoose.Schema(
 	{
+		tax: {
+			type: Number,
+			required: true,
+		},
 		deliveryFee: {
 			type: Number,
 			required: true,
@@ -26,14 +30,14 @@ const OrderSchema = mongoose.Schema(
 			type: Number,
 			required: true,
 		},
-		cartItems: [SingleCartItemSchema], //validation for the cart items
+		orderItems: [SingleOrderItemSchema], //validation for the cart items
 		status: {
 			type: String,
 			enum: ["pending", "failed", "paid", "delivered", "canceled"],
 			default: "pending",
 		},
 		user: {
-			type: mongoose.Schema.ObjectId,
+			type: mongoose.Types.ObjectId,
 			ref: "User",
 			required: true,
 		},

@@ -1,32 +1,34 @@
 [
 	{
-		"deliveryFee": 100,
+		"tax": 100,
+		"deliveryFee": 200,
 		"items": [
 			{
 				"name": "pizza 4",
 				"price": 220,
 				"image": "https://dl.airtable.com/.attachmentThumbnails/e8bc3791196535af65f40e36993b9e1f/438bd160",
 				"amount": 34,
-				"meal": "6307df9016ebc3dd4e7eb73c"
+				"id": "6307df9016ebc3dd4e7eb73c"
 			}
 		]
 	},
 	{
-		"deliveryFee": 100,
+		"tax": 100,
+		"deliveryFee": 200,
 		"items": [
 			{
 				"name": "pizza 7",
 				"price": 470,
 				"image": "https://dl.airtable.com/.attachmentThumbnails/e8bc3791196535af65f40e36993b9e1f/438bd160",
 				"amount": 3,
-				"meal": "6307df9016ebc3dd4e7eb73f"
+				"id": "6307df9016ebc3dd4e7eb73f"
 			},
 			{
 				"name": "pasta 1",
 				"price": 120,
 				"image": "https://dl.airtable.com/.attachmentThumbnails/0be1af59cf889899b5c9abb1e4db38a4/d631ac52?ts=1661163674",
 				"amount": 2,
-				"meal": "6307df9016ebc3dd4e7eb740"
+				"id": "6307df9016ebc3dd4e7eb740"
 			}
 		]
 	}
