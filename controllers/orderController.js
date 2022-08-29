@@ -66,7 +66,7 @@ const createOrder = async (req, res) => {
 
 	res.status(StatusCodes.CREATED).json({
 		order,
-		clientSecret: order.clien_secret,
+		clientSecret: order.client_secret,
 	});
 };
 
@@ -78,12 +78,10 @@ const updateOrder = async (req, res) => {
 	if (!order) {
 		throw new NotFoundError(`No order with id: ${orderId}`);
 	}
-	checkPermissions(req.user, order.user);
-
+	checkPermissions(req.user, order.user); /// checking later
 	order.paymentIntentId = paymentIntentId;
 	order.status = "paid";
 	await order.save();
-
 	res.status(StatusCodes.OK).json({ order });
 };
 
@@ -94,12 +92,14 @@ const getAllOrders = async (req, res) => {
 
 const getSingleOrder = async (req, res) => {
 	const { id: orderId } = req.params;
-	const order = await Order.findOne({ _id: orderId });
-	if (!order) {
+
+	if (mongoose.Types.ObjectId.isValid(orderId)) {
+		const order = await Order.findOne({ _id: orderId })
+		checkPermissions(req.user, order.user); /// checking later
+		res.status(StatusCodes.OK).json({ order });
+	} else {
 		throw new NotFoundError(`No order with id: ${orderId}`);
 	}
-	checkPermissions(req.user, order.user);
-	res.status(StatusCodes.OK).json({ order });
 };
 
 const getCurrentUserOrders = async (req, res) => {
