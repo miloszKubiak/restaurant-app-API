@@ -11,6 +11,7 @@ import authRouter from "./routes/authRoutes.js";
 import mealsRouter from "./routes/mealsRoutes.js";
 import orderRouter from "./routes/orderRoutes.js";
 import userRouter from "./routes/userRoutes.js";
+import stripeRouter from "./routes/stripeRoutes.js";
 
 const app = express();
 dotenv.config();
@@ -29,6 +30,8 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/meals", mealsRouter);
 app.use("/api/v1/orders", orderRouter);
+//stripe
+app.use("/api/v1/payment", stripeRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

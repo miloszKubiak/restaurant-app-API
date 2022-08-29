@@ -22,5 +22,4 @@ router
 	.post(auth, createOrder)
 	// .get(auth, authorizePermissions("admin"), getAllOrders);
 	.get(auth, getAllOrders); /// add authorizes permissions !
-
 export default router;
