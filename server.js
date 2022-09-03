@@ -31,7 +31,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/meals", mealsRouter);
 app.use("/api/v1/orders", orderRouter);
 //stripe
-app.use("/api/v1/payment", stripeRouter);
+app.use("/api/v1/create-payment-intent", stripeRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);

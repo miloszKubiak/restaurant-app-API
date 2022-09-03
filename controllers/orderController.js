@@ -4,21 +4,22 @@ import { StatusCodes } from "http-status-codes";
 import { checkPermissions } from "../utils/checkPermissions.js";
 import { BadRequestError, NotFoundError } from "../errors/index.js";
 import mongoose from "mongoose";
+import Stripe from "stripe";
+import dotenv from "dotenv";
 
-// fake api for test
-const fakeStripeAPI = async ({ amount, currency }) => {
-	const client_secret = "bazinga";
-	return { client_secret, amount };
-};
+dotenv.config();
+const stripe = new Stripe(process.env.STRIPE_SECRET);
 
 const createOrder = async (req, res) => {
-	const { items: cartItems, deliveryFee, tax } = req.body; //check if an alias is needed
+	const { items: cartItems, deliveryFee, tax, deliveryAddress } = req.body; //check if an alias is needed
 
 	if (!cartItems || cartItems.length < 1) {
 		throw new BadRequestError("No cart items provided");
 	}
-	if (!deliveryFee || !tax) {
-		throw new BadRequestError("Please provide tax and delifery fee");
+	if (!deliveryFee || !tax || !deliveryAddress) {
+		throw new BadRequestError(
+			"Please provide tax, delivery fee and delivery address."
+		);
 	}
 
 	let orderItems = [];
@@ -36,7 +37,7 @@ const createOrder = async (req, res) => {
 				price,
 				image,
 				amount: item.amount,
-				id: _id,
+				id: _id//mealID
 			};
 			// add item to order
 			orderItems = [...orderItems, singleOrderItem];
@@ -49,11 +50,20 @@ const createOrder = async (req, res) => {
 	// calculate total
 	const total = tax + deliveryFee + subtotal;
 	// get stripe client secret
-	const paymentIntent = await fakeStripeAPI({
+	const paymentIntent = await stripe.paymentIntents.create({
 		amount: total,
 		currency: "eur",
+		automatic_payment_methods: {
+			enabled: true,
+		},
 	});
-
+	////
+	// const paymentIntent = await fakeStripeAPI({
+	// 	amount: total,
+	// 	currency: "eur",
+	// });
+	///////////////
+	
 	const order = await Order.create({
 		orderItems,
 		total,
@@ -62,8 +72,8 @@ const createOrder = async (req, res) => {
 		deliveryFee,
 		clientSecret: paymentIntent.client_secret,
 		user: req.user.userId,
+		deliveryAddress,
 	});
-
 	res.status(StatusCodes.CREATED).json({
 		order,
 		clientSecret: order.client_secret,

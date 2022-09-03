@@ -1,5 +1,7 @@
 import Stripe from "stripe";
+import dotenv from "dotenv";
 
+dotenv.config();
 const stripe = new Stripe(process.env.STRIPE_SECRET);
 
 const stripeController = async (req, res) => {
@@ -9,12 +11,18 @@ const stripeController = async (req, res) => {
 		return total_amount + delivery_fee;
 	};
 
-	const paymentIntent = await stripe.paymentIntents.create({
-		amount: calculateOrderAmount(),
-		currency: "eur",
-	});
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: calculateOrderAmount(),
+    currency: "eur",
+    automatic_payment_methods: {
+      enabled: true,
+    },
+  });
 
-	res.json({ clientSecret: paymentIntent.client_secret });
+  res.send({
+    clientSecret: paymentIntent.client_secret,
+  });
+
 };
 
 export { stripeController };
