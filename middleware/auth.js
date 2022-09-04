@@ -8,7 +8,7 @@ const auth = (req, res, next) => {
 		throw new UnAuthenticatedError("Authentication Invalid 1");
 	}
 	const token = authHeader.split(" ")[1];
-	
+	console.log(token)
 	try {
 		const payload = jwt.verify(token, process.env.JWT_SECRET);
 		req.user = { userId: payload.userId };

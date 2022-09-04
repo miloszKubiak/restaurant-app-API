@@ -37,6 +37,7 @@ const createOrder = async (req, res) => {
 				price,
 				image,
 				amount: item.amount,
+				size: item.size,
 				id: _id//mealID
 			};
 			// add item to order

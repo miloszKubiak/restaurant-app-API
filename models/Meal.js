@@ -34,12 +34,12 @@ const MealSchema = new mongoose.Schema(
 			enum: ["pizza", "pasta", "soup", "salad", "dessert"],
 			default: "pizza",
 		},
-		// size: {
-		// 	type: String,
-		// 	enum: ["small", "normal", "large"],
-		// 	default: "normal",
-		// 	required: true,
-		// },
+		size: {
+			type: String,
+			enum: ["small", "normal", "large"],
+			default: "normal",
+			required: true,
+		},
 		featured: {
 			type: Boolean,
 			default: false,

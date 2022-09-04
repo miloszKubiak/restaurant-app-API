@@ -5,6 +5,7 @@ const SingleOrderItemSchema = mongoose.Schema({
 	price: { type: Number, required: true },
 	amount: { type: Number, required: true },
 	image: { type: String, required: true },
+	size: { type: String, required: true },
 	id: {
 		type: mongoose.Types.ObjectId,
 		ref: "Meal",
