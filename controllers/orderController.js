@@ -37,7 +37,6 @@ const createOrder = async (req, res) => {
 				price,
 				image,
 				amount: item.amount,
-				size: item.size,
 				id: _id//mealID
 			};
 			// add item to order
@@ -58,12 +57,6 @@ const createOrder = async (req, res) => {
 			enabled: true,
 		},
 	});
-	////
-	// const paymentIntent = await fakeStripeAPI({
-	// 	amount: total,
-	// 	currency: "eur",
-	// });
-	///////////////
 	
 	const order = await Order.create({
 		orderItems,
