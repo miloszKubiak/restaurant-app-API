@@ -1,6 +1,19 @@
 import User from "../models/User.js";
 import { StatusCodes } from "http-status-codes";
-import { BadRequestError } from "../errors/index.js";
+import { BadRequestError, NotFoundError } from "../errors/index.js";
+
+const getAllUsers = async (req, res) => {
+	const users = await User.find({ role: "user" }).select("-password");
+	res.status(StatusCodes.OK).json({ users });
+};
+
+const getSingleUSer = async (req, res) => {
+	const user = await User.findOne({ _id: req.params.id }).select("-password");
+	if (!user) {
+		throw new NotFoundError(`No user with id: ${req.params.id}`);
+	}
+	res.status(StatusCodes.OK).json({ user });
+};
 
 const updateUser = async (req, res) => {
 	const { email, name, lastName, location } = req.body;
