@@ -7,7 +7,7 @@ const getAllUsers = async (req, res) => {
 	res.status(StatusCodes.OK).json({ users });
 };
 
-const getSingleUSer = async (req, res) => {
+const getSingleUser = async (req, res) => {
 	const user = await User.findOne({ _id: req.params.id }).select("-password");
 	if (!user) {
 		throw new NotFoundError(`No user with id: ${req.params.id}`);
@@ -35,4 +35,4 @@ const updateUser = async (req, res) => {
 	res.status(StatusCodes.OK).json({ user, token, location: user.location });
 };
 
-export { updateUser };
+export { updateUser, getAllUsers, getSingleUser };
