@@ -1,9 +1,14 @@
 import express from "express";
-import { getAllMeals, getSingleMeal } from "../controllers/mealController.js";
+import auth from "../middleware/auth.js";
+import {
+	getAllMeals,
+	getSingleMeal,
+	createMeal,
+} from "../controllers/mealController.js";
 
 const router = express.Router();
 
-router.route("/").get(getAllMeals);
-router.route("/:id").get(getSingleMeal)
+router.route("/").get(getAllMeals).post(auth, createMeal); //check admin later;
+router.route("/:id").get(getSingleMeal);
 
 export default router;

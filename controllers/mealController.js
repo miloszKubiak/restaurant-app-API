@@ -1,6 +1,37 @@
 import Meal from "../models/Meal.js";
 import { StatusCodes } from "http-status-codes";
 import CustomAPIError from "../errors/custom-api.js";
+import BadRequestError from "../errors/bad-request.js";
+
+const createMeal = async (req, res) => {
+	const {
+		name,
+		price,
+		description,
+		image,
+		category,
+		featured,
+		averageRating,
+		numberOfReviews,
+	} = req.body;
+
+	if (
+		!name ||
+		!category ||
+		!price ||
+		!image ||
+		!description ||
+		!featured ||
+		!averageRating ||
+		!numberOfReviews
+	) {
+		throw new BadRequestError("Please provide all values");
+	}
+	req.body.user = req.user.Id;
+
+	const meal = await Meal.create(req.body);
+	res.status(StatusCodes.CREATED).json({ meal });
+};
 
 const getSingleMeal = async (req, res) => {
 	const { id: mealId } = req.params;
@@ -92,4 +123,4 @@ const getAllMeals = async (req, res) => {
 	});
 };
 
-export { getAllMeals, getSingleMeal };
+export { getAllMeals, getSingleMeal, createMeal };
