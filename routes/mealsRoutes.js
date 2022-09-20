@@ -5,11 +5,16 @@ import {
 	getSingleMeal,
 	createMeal,
 	updateMeal,
+	deleteMeal,
 } from "../controllers/mealController.js";
 
 const router = express.Router();
 
 router.route("/").get(getAllMeals).post(auth, createMeal); //check admin later;
-router.route("/:id").get(getSingleMeal).patch(auth, updateMeal);
+router
+	.route("/:id")
+	.get(getSingleMeal)
+	.patch(auth, updateMeal)
+	.delete(deleteMeal);
 
 export default router;

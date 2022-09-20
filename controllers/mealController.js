@@ -56,6 +56,21 @@ const updateMeal = async (req, res) => {
 	res.status(StatusCodes.OK).json({ updatedMeal });
 };
 
+const deleteMeal = async (req, res) => {
+	const { id: mealId } = req.params;
+
+	const meal = await Meal.findOne({ _id: mealId });
+
+	if (!meal) {
+		throw new NotFoundError(`No meal with id: ${mealId}`);
+	}
+
+	//check permissions
+	await meal.remove();
+
+	res.status(StatusCodes.OK).json({ msg: "Success! Meal removed" });
+};
+
 const getSingleMeal = async (req, res) => {
 	const { id: mealId } = req.params;
 
@@ -146,4 +161,4 @@ const getAllMeals = async (req, res) => {
 	});
 };
 
-export { getAllMeals, getSingleMeal, createMeal, updateMeal };
+export { getAllMeals, getSingleMeal, createMeal, updateMeal, deleteMeal };
