@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import CustomAPIError from "../errors/custom-api.js";
 import BadRequestError from "../errors/bad-request.js";
 import NotFoundError from "../errors/not-found.js";
+import { checkPermissions } from "../utils/checkPermissions.js";
 
 const createMeal = async (req, res) => {
 	const {
@@ -29,6 +30,8 @@ const createMeal = async (req, res) => {
 		throw new BadRequestError("Please provide all values");
 	}
 	req.body.user = req.user.Id;
+
+	// checkPermissions(req.user)
 
 	const meal = await Meal.create(req.body);
 	res.status(StatusCodes.CREATED).json({ meal });

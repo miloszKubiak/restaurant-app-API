@@ -7,6 +7,7 @@ import {
 	updateMeal,
 	deleteMeal,
 } from "../controllers/mealController.js";
+// import { checkPermissions } from "../utils/checkPermissions.js";
 
 const router = express.Router();
 

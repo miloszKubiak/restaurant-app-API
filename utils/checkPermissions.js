@@ -1,10 +1,8 @@
-import { UnauthorizedError } from "../errors/index.js";
+import { UnAuthenticatedError } from "../errors/index.js";
 
-const checkPermissions = (requestUser, resourceUserId) => {
-	if (requestUser.role === "admin") return;
-	if (requestUser.userId === resourceUserId.toString()) return;
-
-	throw new UnauthorizedError("Not authorized to access this route");
+const checkPermissions = (requestUser) => {
+	if (requestUser?.role === "admin") return;
+	throw new UnAuthenticatedError("Not authorized to access this route");
 };
 
 export { checkPermissions };
