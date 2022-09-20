@@ -2,6 +2,7 @@ import Meal from "../models/Meal.js";
 import { StatusCodes } from "http-status-codes";
 import CustomAPIError from "../errors/custom-api.js";
 import BadRequestError from "../errors/bad-request.js";
+import NotFoundError from "../errors/not-found.js";
 
 const createMeal = async (req, res) => {
 	const {
@@ -31,6 +32,28 @@ const createMeal = async (req, res) => {
 
 	const meal = await Meal.create(req.body);
 	res.status(StatusCodes.CREATED).json({ meal });
+};
+
+const updateMeal = async (req, res) => {
+	const { id: mealId } = req.params;
+	const { name, price, image, description } = req.body;
+
+	if (!name || !price || !image || !description) {
+		throw new BadRequestError("Please provide all values.");
+	}
+
+	const meal = await Meal.findOne({ _id: mealId });
+
+	if (!meal) {
+		throw new NotFoundError(`No meal with id ${mealId}`);
+	}
+
+	const updatedMeal = await Meal.findOneAndUpdate({ _id: mealId }, req.body, {
+		new: true,
+		runValidators: true,
+	});
+
+	res.status(StatusCodes.OK).json({ updatedMeal });
 };
 
 const getSingleMeal = async (req, res) => {
@@ -123,4 +146,4 @@ const getAllMeals = async (req, res) => {
 	});
 };
 
-export { getAllMeals, getSingleMeal, createMeal };
+export { getAllMeals, getSingleMeal, createMeal, updateMeal };
