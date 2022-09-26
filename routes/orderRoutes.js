@@ -7,6 +7,7 @@ import {
 	getAllOrders,
 	getSingleOrder,
 	getCurrentUserOrders,
+	deleteOrder,
 } from "../controllers/orderController.js";
 
 const router = express.Router();
@@ -16,7 +17,8 @@ router.route("/showAllMyOrders").get(auth, getCurrentUserOrders);
 router
 	.route("/:id")
 	.get(auth, getSingleOrder)
-	.patch(auth, updateOrder);
+	.patch(auth, updateOrder)
+	.delete(auth, deleteOrder);
 router
 	.route("/")
 	.post(auth, createOrder)

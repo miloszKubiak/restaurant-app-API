@@ -42,11 +42,13 @@ const MealSchema = new mongoose.Schema(
 		// },
 		featured: {
 			type: Boolean,
+			enum: [true, false],
 			default: false,
 		},
 		averageRating: {
 			type: Number,
-			default: 0,
+			enum: [1, 2, 3, 4, 5],
+			default: 3,
 		},
 		numberOfReviews: {
 			type: Number,

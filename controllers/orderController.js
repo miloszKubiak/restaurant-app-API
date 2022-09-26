@@ -82,7 +82,7 @@ const updateOrder = async (req, res) => {
 	if (!order) {
 		throw new NotFoundError(`No order with id: ${orderId}`);
 	}
-	checkPermissions(req.user, order.user); /// checking later
+	// checkPermissions(req.user, order.user); /// checking later
 	order.paymentIntentId = paymentIntentId;
 	order.status = "paid";
 	await order.save();
@@ -111,10 +111,26 @@ const getCurrentUserOrders = async (req, res) => {
 	res.status(StatusCodes.OK).json({ orders, count: orders.length });
 };
 
+const deleteOrder = async (req, res) => {
+	const { id: orderId } = req.params;
+
+	const order = await Order.findOne({ _id: orderId });
+
+	if (!order) {
+		throw new NotFoundError(`No order with id: ${orderId}`);
+	}
+
+	//check permissions
+	await order.remove();
+
+	res.status(StatusCodes.OK).json({ msg: "Success! Order removed" });
+};
+
 export {
 	createOrder,
 	updateOrder,
 	getAllOrders,
 	getSingleOrder,
 	getCurrentUserOrders,
+	deleteOrder,
 };
