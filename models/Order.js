@@ -33,8 +33,8 @@ const OrderSchema = mongoose.Schema(
 		orderItems: [SingleOrderItemSchema], //validation for the cart items
 		status: {
 			type: String,
-			enum: ["pending", "failed", "paid", "delivered", "canceled"],
-			default: "pending",
+			enum: ["sent", "paid", "delivered", "canceled"],
+			default: "paid",
 		},
 		user: {
 			type: mongoose.Types.ObjectId,

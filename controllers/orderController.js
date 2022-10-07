@@ -37,7 +37,7 @@ const createOrder = async (req, res) => {
 				price,
 				image,
 				amount: item.amount,
-				id: _id//mealID
+				id: _id, //mealID
 			};
 			// add item to order
 			orderItems = [...orderItems, singleOrderItem];
@@ -57,7 +57,7 @@ const createOrder = async (req, res) => {
 			enabled: true,
 		},
 	});
-	
+
 	const order = await Order.create({
 		orderItems,
 		total,
@@ -74,19 +74,36 @@ const createOrder = async (req, res) => {
 	});
 };
 
+// const updateOrder = async (req, res) => {
+// 	const { id: orderId } = req.params;
+// 	const { paymentIntentId } = req.body;
+
+// 	const order = await Order.findOne({ _id: orderId });
+// 	if (!order) {
+// 		throw new NotFoundError(`No order with id: ${orderId}`);
+// 	}
+// 	// checkPermissions(req.user, order.user); /// checking later
+// 	order.paymentIntentId = paymentIntentId;
+// 	order.status = "paid";
+// 	await order.save();
+// 	res.status(StatusCodes.OK).json({ order });
+// };
+
 const updateOrder = async (req, res) => {
 	const { id: orderId } = req.params;
-	const { paymentIntentId } = req.body;
 
 	const order = await Order.findOne({ _id: orderId });
 	if (!order) {
 		throw new NotFoundError(`No order with id: ${orderId}`);
 	}
 	// checkPermissions(req.user, order.user); /// checking later
-	order.paymentIntentId = paymentIntentId;
-	order.status = "paid";
-	await order.save();
-	res.status(StatusCodes.OK).json({ order });
+	const updatedOrder = await Order.findByIdAndUpdate(
+		{ _id: orderId },
+		req.body,
+		{ new: true, runValidators: true }
+	);
+
+	res.status(StatusCodes.OK).json({ updatedOrder });
 };
 
 const getAllOrders = async (req, res) => {
@@ -98,7 +115,7 @@ const getSingleOrder = async (req, res) => {
 	const { id: orderId } = req.params;
 
 	if (mongoose.Types.ObjectId.isValid(orderId)) {
-		const order = await Order.findOne({ _id: orderId })
+		const order = await Order.findOne({ _id: orderId });
 		checkPermissions(req.user, order.user); /// checking later
 		res.status(StatusCodes.OK).json({ order });
 	} else {
@@ -126,6 +143,15 @@ const deleteOrder = async (req, res) => {
 	res.status(StatusCodes.OK).json({ msg: "Success! Order removed" });
 };
 
+const showStats = async (req, res) => {
+	let stats = await Order.aggregate([
+		{ $match: { user: mongoose.Types.ObjectId(req.user.userId) } },
+	]);
+	console.log(stats);
+
+	res.status(StatusCodes.OK).json({ stats });
+};
+
 export {
 	createOrder,
 	updateOrder,
@@ -133,4 +159,5 @@ export {
 	getSingleOrder,
 	getCurrentUserOrders,
 	deleteOrder,
+	showStats,
 };

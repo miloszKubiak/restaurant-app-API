@@ -39,9 +39,9 @@ const createMeal = async (req, res) => {
 
 const updateMeal = async (req, res) => {
 	const { id: mealId } = req.params;
-	const { name, price, image, description } = req.body;
+	const { name, price, image, description, numberOfReviews } = req.body;
 
-	if (!name || !price || !image || !description) {
+	if (!name || !price || !image || !description || !numberOfReviews) {
 		throw new BadRequestError("Please provide all values.");
 	}
 
@@ -98,7 +98,6 @@ const getAllMeals = async (req, res) => {
 	if (search) {
 		queryObject.name = { $regex: search, $options: "i" };
 	}
-	console.log(queryObject);
 	let result = Meal.find(queryObject);
 
 	//filtering

@@ -2,9 +2,6 @@ import mongoose from "mongoose";
 
 const MealSchema = new mongoose.Schema(
 	{
-		// id: {
-
-		// },
 		name: {
 			type: String,
 			required: [true, "Please provide meal name"],

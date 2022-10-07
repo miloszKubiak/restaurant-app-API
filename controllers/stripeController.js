@@ -10,7 +10,7 @@ const stripeController = async (req, res) => {
 	const calculateOrderAmount = () => {
 		return total_amount + delivery_fee;
 	};
-
+  
   const paymentIntent = await stripe.paymentIntents.create({
     amount: calculateOrderAmount(),
     currency: "eur",
