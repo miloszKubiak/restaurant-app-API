@@ -143,13 +143,26 @@ const deleteOrder = async (req, res) => {
 	res.status(StatusCodes.OK).json({ msg: "Success! Order removed" });
 };
 
-const showStats = async (req, res) => {
+const showAllStats = async (req, res) => {
 	let stats = await Order.aggregate([
-		{ $match: { user: mongoose.Types.ObjectId(req.user.userId) } },
+		//match is for the specific user
+		// { $match: { user: mongoose.Types.ObjectId(req.user.userId) } },
+		{ $group: { _id: "$status", count: { $sum: 1 } } },
 	]);
-	console.log(stats);
+	stats = stats.reduce((acc, curr) => {
+		const { _id: title, count } = curr;
+		acc[title] = count;
+		return acc;
+	}, {});
 
-	res.status(StatusCodes.OK).json({ stats });
+	const defaultStats = {
+		paid: stats.paid || 0,
+		sent: stats.sent || 0,
+		canceled: stats.canceled || 0,
+		delivered: stats.delivered || 0,
+	};
+
+	res.status(StatusCodes.OK).json({ defaultStats });
 };
 
 export {
@@ -159,5 +172,5 @@ export {
 	getSingleOrder,
 	getCurrentUserOrders,
 	deleteOrder,
-	showStats,
+	showAllStats,
 };

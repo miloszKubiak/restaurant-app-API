@@ -8,13 +8,13 @@ import {
 	getSingleOrder,
 	getCurrentUserOrders,
 	deleteOrder,
-	showStats,
+	showAllStats,
 } from "../controllers/orderController.js";
 
 const router = express.Router();
 
 router.route("/showAllMyOrders").get(auth, getCurrentUserOrders);
-router.route("/stats").get(auth, showStats);
+router.route("/all-stats").get(auth, showAllStats);
 router
 	.route("/:id")
 	.get(auth, getSingleOrder)
