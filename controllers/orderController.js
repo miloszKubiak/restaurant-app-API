@@ -162,7 +162,23 @@ const showAllStats = async (req, res) => {
 		delivered: stats.delivered || 0,
 	};
 
-	res.status(StatusCodes.OK).json({ defaultStats });
+	let monthlyOrders = await Order.aggregate([
+		//match is for the specific user
+		// { $match: { user: mongoose.Types.ObjectId(req.user.userId) } },
+		{
+			$group: {
+				_id: {
+					year: { $year: "$createdAt" },
+					month: { $month: "$createdAt" },
+				},
+				count: { $sum: 1 },
+			},
+		},
+		{ $sort: { "_id.year": -1, "_id.month": -1 } },
+		{ $limit: 6 },
+	]);
+
+	res.status(StatusCodes.OK).json({ defaultStats, monthlyOrders });
 };
 
 export {
