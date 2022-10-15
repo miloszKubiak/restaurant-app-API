@@ -6,6 +6,7 @@ import { BadRequestError, NotFoundError } from "../errors/index.js";
 import mongoose from "mongoose";
 import Stripe from "stripe";
 import dotenv from "dotenv";
+import moment from "moment";
 
 dotenv.config();
 const stripe = new Stripe(process.env.STRIPE_SECRET);
@@ -73,21 +74,6 @@ const createOrder = async (req, res) => {
 		clientSecret: order.client_secret,
 	});
 };
-
-// const updateOrder = async (req, res) => {
-// 	const { id: orderId } = req.params;
-// 	const { paymentIntentId } = req.body;
-
-// 	const order = await Order.findOne({ _id: orderId });
-// 	if (!order) {
-// 		throw new NotFoundError(`No order with id: ${orderId}`);
-// 	}
-// 	// checkPermissions(req.user, order.user); /// checking later
-// 	order.paymentIntentId = paymentIntentId;
-// 	order.status = "paid";
-// 	await order.save();
-// 	res.status(StatusCodes.OK).json({ order });
-// };
 
 const updateOrder = async (req, res) => {
 	const { id: orderId } = req.params;
@@ -177,6 +163,21 @@ const showAllStats = async (req, res) => {
 		{ $sort: { "_id.year": -1, "_id.month": -1 } },
 		{ $limit: 6 },
 	]);
+
+	monthlyOrders = monthlyOrders
+		.map((item) => {
+			const {
+				_id: { year, month },
+				count,
+			} = item;
+			const date = moment()
+				.month(month - 1)
+				.year(year)
+				.format("MMM Y");
+
+			return { date, count };
+		})
+		.reverse();
 
 	res.status(StatusCodes.OK).json({ defaultStats, monthlyOrders });
 };
