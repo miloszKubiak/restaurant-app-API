@@ -9,12 +9,14 @@ import {
 	getCurrentUserOrders,
 	deleteOrder,
 	showAllStats,
+	showMyStats,
 } from "../controllers/orderController.js";
 
 const router = express.Router();
 
 router.route("/showAllMyOrders").get(auth, getCurrentUserOrders);
 router.route("/all-stats").get(auth, showAllStats);
+router.route("/my-stats").get(auth, showMyStats);
 router
 	.route("/:id")
 	.get(auth, getSingleOrder)
