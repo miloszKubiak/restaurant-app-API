@@ -13,6 +13,10 @@ import orderRouter from "./routes/orderRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 import stripeRouter from "./routes/stripeRoutes.js";
 
+import helmet from "helmet";
+import xss from "xss-clean";
+import mongoSanitize from "express-mongo-sanitize";
+
 const app = express();
 dotenv.config();
 
@@ -21,6 +25,9 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 app.use(express.json());
+app.use(helmet());
+app.use(xss());
+app.use(mongoSanitize());
 
 app.get("/api/v1", (req, res) => {
 	res.json({ msg: "api" });
