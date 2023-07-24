@@ -100,36 +100,6 @@ const getAllMeals = async (req, res) => {
 	}
 	let result = Meal.find(queryObject);
 
-	//filtering
-	// if (featured) {
-	// 	queryObject.featured = featured === "true" ? true : false;
-	// }
-	// if (search) {
-	// 	queryObject.name = { $regex: search, $options: "i" };
-	// }
-	// if (numericFilters) {
-	// 	const operatorMap = {
-	// 		">": "$gt",
-	// 		">=": "$gte",
-	// 		"=": "$eq",
-	// 		"<": "$lt",
-	// 		"<=": "$lte",
-	// 	};
-	// 	const regEx = /\b(<|>|>=|=|<|<=)\b/g;
-	// 	let filters = numericFilters.replace(
-	// 		regEx,
-	// 		(match) => `-${operatorMap[match]}-`
-	// 	);
-	// 	const options = ["price", "averageRating"];
-	// 	filters = filters.split(",").forEach((item) => {
-	// 		const [field, operator, value] = item.split("-");
-	// 		if (options.includes(field)) {
-	// 			queryObject[field] = { [operator]: Number(value) };
-	// 		}
-	// 	});
-	// }
-	// let result = Meal.find(queryObject);
-
 	//sort
 	if (sort === "a-z") {
 		result = result.sort("name");
